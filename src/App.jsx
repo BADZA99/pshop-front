@@ -1,11 +1,14 @@
+import { Outlet } from 'react-router'
 import './App.css'
+import NavItems from './components/NavItems'
 
 function App() {
 
 
   return (
     <>
-     <h1>hello papabnk</h1>
+     <NavItems/>
+     <Outlet/>
     </>
   )
 }
