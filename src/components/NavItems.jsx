@@ -32,6 +32,7 @@ const NavItems = () => {
           </div>
         </div>
       </div>
+      
       {/* header section */}
       <div className="header-bottom">
         <div className="container">
@@ -93,6 +94,7 @@ const NavItems = () => {
           </div>
         </div>
       </div>
+
     </header>
   );
 };
