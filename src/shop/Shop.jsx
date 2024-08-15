@@ -7,6 +7,8 @@ import Data from "../products.json"
 import ProductCards from './ProductCards';
 import Search from './Search'
 import ShopCategory from './ShopCategory'
+import PopularPost from './PopularPost'
+import Tags from './Tags'
 export default function Shop() {
     const [gridList, setGridList] = useState(true);
     const [products, setproducts] = useState(Data);
@@ -81,6 +83,8 @@ const filterItem = (Currentcategory) =>  {
                 setproducts={setproducts}
                 setItem={setproducts}
               />
+              <PopularPost />
+              <Tags/>
             </div>
           </div>
         </div>
