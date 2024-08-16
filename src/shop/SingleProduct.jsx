@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 // autoplay
 import  { Autoplay } from 'swiper/modules';
+import ProductDisplay from './ProductDisplay';
 
 export default function SingleProduct() {
     const [product,setProduct]=useState([]);
@@ -71,7 +72,7 @@ export default function SingleProduct() {
                         <div className="post-content">
                             <div>
                                 {
-                                    productData.map(item=> <p key={item.id}>{item.name}</p>)
+                                    productData.map(item => <ProductDisplay key={item.id} item={item}/>)
                                 }
                             </div>
                         </div>
