@@ -26,9 +26,9 @@ export default function Shop() {
 const [selectedcategory, setselectedCategory] = useState("");
 const menuItems = [...new Set(Data.map((val)=>val.category))];
 const filterItem = (Currentcategory) =>  {
-  const updatedItems = Data.filter((curElem) => {
+const updatedItems = Data.filter((curElem) => {
     return curElem.category === Currentcategory;
-  });
+});
   setproducts(updatedItems);
   setselectedCategory(Currentcategory);
 }
