@@ -8,6 +8,9 @@ import "swiper/css";
 // autoplay
 import  { Autoplay } from 'swiper/modules';
 import ProductDisplay from './ProductDisplay';
+import Review from './Review';
+import PopularPost from './PopularPost';
+import Tags from './Tags';
 
 export default function SingleProduct() {
     const [product,setProduct]=useState([]);
@@ -79,11 +82,19 @@ export default function SingleProduct() {
                     </div>
                   </div>
                 </div>
-                <div className="review"></div>
+                {/* review */}
+                <div className="review">
+                    <Review/>
+                </div>
               </aside>
             </div>
             {/* rtight side */}
-            <div className="col-lg-4 col-12">right SIDE</div>
+            <div className="col-lg-4 col-12">
+                <aside className="ps-lg-4">
+                    <PopularPost/>
+                    <Tags/>
+                </aside>
+            </div>
           </div>
         </div>
       </div>

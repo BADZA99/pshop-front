@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 const desc='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore, temporibus.'
 export default function ProductDisplay({item}) {
-  console.log(item);
+//   console.log(item);
   const { name, id, price, seller, ratingsCount, quantity } = item;
   const [prequantity, setQuantity] = useState(quantity);
   // coupon et size
@@ -31,7 +31,7 @@ export default function ProductDisplay({item}) {
     // handle submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(`size: ${size} color: ${color} quantity: ${prequantity} coupon: ${coupon}`);
+        // console.log(`size: ${size} color: ${color} quantity: ${prequantity} coupon: ${coupon}`);
         const product = {
             id:id,
             name:name,
