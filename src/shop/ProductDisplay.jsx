@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const desc='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore, temporibus.'
 export default function ProductDisplay({item}) {
 //   console.log(item);
-  const { name, id, price, seller, ratingsCount, quantity } = item;
+  const { name, id, price, seller, ratingsCount, quantity,img } = item;
   const [prequantity, setQuantity] = useState(quantity);
   // coupon et size
   const [coupon, setCoupon] = useState("");
@@ -42,9 +42,10 @@ export default function ProductDisplay({item}) {
             coupon:coupon,
             img:img
         }
+        console.log(product);
 
         // log
-        const existingCart= JSON.parse(localStorage.getItem('cart')) || {};
+        const existingCart= JSON.parse(localStorage.getItem('cart')) || [];
         const existingProductIndex = existingCart.findIndex((item)=>item.id===id);
         if(existingProductIndex !== -1){
             existingCart[existingProductIndex].quantity += prequantity;
@@ -78,7 +79,7 @@ export default function ProductDisplay({item}) {
       </div>
       {/* cart component */}
       <div className="">
-        <form action="" onChange={handleSubmit}>
+        <form action="" onSubmit={handleSubmit}>
           <div className="select-product size">
             {/* size */}
             <select name="" id="" value={size} onChange={handleSizeChange}>
