@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PageHeader from '../components/PageHeader';
 import { Link } from 'react-router-dom';
 import delImgUrl from '../assets/images/shop/del.png';
+import CheckoutPage from './CheckoutPage';
 export default function CartPage() {
     const [cartItems, setCartItems] = useState([]);
     useEffect(() => {
@@ -144,7 +145,9 @@ export default function CartPage() {
                     placeholder="coupon code ..."
                   />
                   <input type="submit" className="" value="update cart" />
-                  <div className="">checkoutPage</div>
+                  <div className="">
+                    <CheckoutPage/>
+                  </div>
                 </form>
               </div>
 
