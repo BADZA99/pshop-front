@@ -49,11 +49,14 @@ const router = createBrowserRouter( [
           path:'cart-page',
           element: <CartPage/>,
         },
-        // about
         {
           path:'/about',
           element: <About/>,
-        }
+        },
+        // {
+        //   path: "/login",
+        //   element: <Login/>,
+        // }
       ]
     },
   ],
