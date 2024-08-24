@@ -3,6 +3,7 @@ import ProduitCrud from './ProduitCrud';
 import CategorieCrud from './CategorieCrud';
 import CommandeCrud from './CommandeCrud';
 import UserCrud from './UserCrud';
+import Statistiques from './Statistiques';
 
 export default function Dashboard() {
   const [activeItem, setActiveItem] = useState("Produits");
@@ -20,6 +21,8 @@ export default function Dashboard() {
         return <CommandeCrud/>;
       case "utilisateurs":
         return <UserCrud/>;
+      case "statistiques":
+        return <Statistiques />;
       default:
         return <div>Veuillez sélectionner une option dans le menu !</div>;
     }
@@ -86,6 +89,19 @@ export default function Dashboard() {
                   <div className="flex items-center">
                     <i className="fas fa-file-alt mr-2"></i>
                     <span>utilisateurs</span>
+                  </div>
+                  <i className="fas fa-chevron-down text-xs"></i>
+                </div>
+              </li>
+              {/* Statistiques */}
+              <li className="option-avec-déroulant">
+                <div
+                  className="flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer"
+                  onClick={() => setActiveItem("statistiques")}
+                >
+                  <div className="flex items-center">
+                    <i className="fas fa-file-alt mr-2"></i>
+                    <span>Statistiques</span>
                   </div>
                   <i className="fas fa-chevron-down text-xs"></i>
                 </div>

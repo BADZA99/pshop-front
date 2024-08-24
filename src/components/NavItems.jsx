@@ -32,7 +32,7 @@ const NavItems = () => {
           </div>
         </div>
       </div>
-      
+
       {/* header section */}
       <div className="header-bottom">
         <div className="container">
@@ -59,7 +59,7 @@ const NavItems = () => {
                     <Link to="/services">Services</Link>
                   </li>
                   <li>
-                    <Link to="/blog">Blog</Link>
+                    <Link to="/dasboard">dasboard</Link>
                   </li>
                   <li>
                     <Link to="/contact">Contact</Link>
@@ -67,7 +67,7 @@ const NavItems = () => {
                 </ul>
               </div>
               {/* auth buttons */}
-              <Link to="/sign-up" className="lab-btn me-3 d-none d-md-block">
+              <Link to="/register" className="lab-btn me-3 d-none d-md-block">
                 Create Account
               </Link>
               <Link to="/login" className="d-none d-md-block">
@@ -85,7 +85,8 @@ const NavItems = () => {
               </div>
 
               {/* social toggler */}
-              <div className="ellepsis-bar d-md-none"
+              <div
+                className="ellepsis-bar d-md-none"
                 onClick={() => setSocialToggle(!socialToggle)}
               >
                 <i className="icofont-info-square"></i>
@@ -94,7 +95,6 @@ const NavItems = () => {
           </div>
         </div>
       </div>
-
     </header>
   );
 };
