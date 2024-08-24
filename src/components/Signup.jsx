@@ -50,7 +50,7 @@ export default function Signup() {
           {/* accoiunt button */}
           <div className="account-bottom">
             <span className="d-flex cate pt-10">
-               have a account ?<Link to="/login">register now</Link>
+               have a account ?<Link to="/login">login now</Link>
             </span>
 
             <span className="or">
