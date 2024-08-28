@@ -2,89 +2,44 @@ import React, { useEffect, useState } from 'react'
 
 export default function ProduitCrud() {
   // Exemple de données
-  const data = [
-    {
-      name: "Tiger Nixon",
-      position: "System Architect",
-      office: "Edinburgh",
-      age: 61,
-      startDate: "2011/04/25",
-      salary: "$320,800",
-    },
-    {
-      name: "Garrett Winters",
-      position: "Accountant",
-      office: "Tokyo",
-      age: 63,
-      startDate: "2011/07/25",
-      salary: "$170,750",
-    },
-    {
-      name: "Ashton Cox",
-      position: "Junior Technical Author",
-      office: "San Francisco",
-      age: 66,
-      startDate: "2009/01/12",
-      salary: "$86,000",
-    },
-    {
-      name: "Cedric Kelly",
-      position: "Senior Javascript Developer",
-      office: "Edinburgh",
-      age: 22,
-      startDate: "2012/03/29",
-      salary: "$433,060",
-    },
-    {
-      name: "Airi Satou",
-      position: "Accountant",
-      office: "Tokyo",
-      age: 33,
-      startDate: "2008/11/28",
-      salary: "$162,700",
-    },
-    {
-      name: "Brielle Williamson",
-      position: "Integration Specialist",
-      office: "New York",
-      age: 61,
-      startDate: "2012/12/02",
-      salary: "$372,000",
-    },
-    {
-      name: "Herrod Chandler",
-      position: "Sales Assistant",
-      office: "San Francisco",
-      age: 59,
-      startDate: "2012/08/06",
-      salary: "$137,500",
-    },
-    {
-      name: "Rhona Davidson",
-      position: "Integration Specialist",
-      office: "Tokyo",
-      age: 55,
-      startDate: "2010/10/14",
-      salary: "$327,900",
-    },
-    {
-      name: "Colleen Hurst",
-      position: "Javascript Developer",
-      office: "San Francisco",
-      age: 39,
-      startDate: "2009/09/15",
-      salary: "$205,500",
-    },
-    {
-      name: "Sonya Frost",
-      position: "Software Engineer",
-      office: "Edinburgh",
-      age: 23,
-      startDate: "2008/12/13",
-      salary: "$103,600",
-    },
-    // Ajoutez d'autres données si nécessaire
-  ];
+const data = [
+  {
+    libelle: "Produit 1",
+    codeProduit: "P001",
+    description: "Description du produit 1",
+    seuil: 10,
+    stock: 5,
+  },
+  {
+    libelle: "Produit 2",
+    codeProduit: "P002",
+    description: "Description du produit 2",
+    seuil: 5,
+    stock: 20,
+  },
+  {
+    libelle: "Produit 3",
+    codeProduit: "P003",
+    description: "Description du produit 3",
+    seuil: 8,
+    stock: 30,
+  },
+  {
+    libelle: "Produit 4",
+    codeProduit: "P004",
+    description: "Description du produit 4",
+    seuil: 12,
+    stock: 4,
+  },
+  {
+    libelle: "Produit 5",
+    codeProduit: "P005",
+    description: "Description du produit 5",
+    seuil: 15,
+    stock: 60,
+  },
+
+];
 
   // États pour gérer la recherche, la pagination et les données filtrées
   const [searchTerm, setSearchTerm] = useState("");
@@ -94,9 +49,11 @@ export default function ProduitCrud() {
   // Filtrer les données en fonction du terme de recherche
   const filteredData = data.filter(
     (row) =>
-      row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.office.toLowerCase().includes(searchTerm.toLowerCase())
+      row.libelle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.codeProduit.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.seuil.toString().includes(searchTerm) ||
+      row.stock.toString().includes(searchTerm)
   );
 
   // Calculer l'index des lignes à afficher pour la page courante
@@ -114,9 +71,7 @@ export default function ProduitCrud() {
   };
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h2 className="text-2xl font-bold mb-4">
-        Exemple de Datatable avec Recherche et Pagination
-      </h2>
+      <h2 className="text-2xl font-bold mb-4">gestion des produits</h2>
 
       {/* Barre de recherche */}
       <input
@@ -127,27 +82,52 @@ export default function ProduitCrud() {
         className="mb-4 p-2 border rounded"
       />
 
+      {/* bouton ajouter */}
+      <button className="bg-blue-500 text-white px-2 py-1 rounded mb-4">
+        Ajouter produit
+      </button>
+
       {/* Tableau */}
-      <table className="table-auto w-full">
+      <table className="min-w-full bg-white">
         <thead>
           <tr>
-            <th className="px-4 py-2">Nom</th>
-            <th className="px-4 py-2">Poste</th>
-            <th className="px-4 py-2">Bureau</th>
-            <th className="px-4 py-2">Âge</th>
-            <th className="px-4 py-2">Date embauche</th>
-            <th className="px-4 py-2">Salaire</th>
+            <th className="px-4 py-2">Libelle</th>
+            <th className="px-4 py-2">CodeProduit</th>
+            <th className="px-4 py-2">Description</th>
+            <th className="px-4 py-2">Seuil</th>
+            <th className="px-4 py-2">Stock</th>
+            <th className="px-4 py-2">Action</th>
           </tr>
         </thead>
         <tbody>
-          {currentRows.map((row, index) => (
+          {currentRows.map((item, index) => (
             <tr key={index}>
-              <td className="border px-4 py-2">{row.name}</td>
-              <td className="border px-4 py-2">{row.position}</td>
-              <td className="border px-4 py-2">{row.office}</td>
-              <td className="border px-4 py-2">{row.age}</td>
-              <td className="border px-4 py-2">{row.startDate}</td>
-              <td className="border px-4 py-2">{row.salary}</td>
+              <td className="border px-4 py-2">{item.libelle}</td>
+              <td className="border px-4 py-2">{item.codeProduit}</td>
+              <td className="border px-4 py-2">{item.description}</td>
+              <td className="border px-4 py-2">{item.seuil}</td>
+              <td
+                className={`border px-4 py-2 ${
+                  item.stock <= item.seuil
+                    ? "bg-red-500 text-white"
+                    : "bg-green-500 text-white"
+                }`}
+              >
+                {item.stock}
+              </td>
+              {/* action */}
+              <td className="border px-4 py-2">
+                <button
+                  className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
+                >
+                  Éditer
+                </button>
+                <button
+                  className="bg-red-500 text-white px-2 py-1 rounded"
+                >
+                  Supprimer
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -33,7 +33,7 @@ export default function Dashboard() {
       {/* Navigation supérieure */}
       <nav className="bg-blue-500 p-4 flex items-center justify-between">
         <div>
-          <h1 className="text-white text-xl font-semibold">Admin Dashboard</h1>
+          <h1 className="text-white text-xl font-semibold">Admin</h1>
         </div>
       </nav>
 
@@ -46,7 +46,9 @@ export default function Dashboard() {
               {/* Produits */}
               <li className="option-avec-déroulant">
                 <div
-                  className="flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer"
+                  className={`flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer ${
+                    activeItem === "Produits" ? "bg-gray-700 text-white" : ""
+                  }`}
                   onClick={() => setActiveItem("Produits")}
                 >
                   <div className="flex items-center">
@@ -58,7 +60,9 @@ export default function Dashboard() {
               {/* Categories */}
               <li className="option-avec-déroulant">
                 <div
-                  className="flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer"
+                  className={`flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer ${
+                    activeItem === "Categories" ? "bg-gray-700 text-white" : ""
+                  }`}
                   onClick={() => setActiveItem("Categories")}
                 >
                   <div className="flex items-center">
@@ -71,7 +75,9 @@ export default function Dashboard() {
               {/* commandes */}
               <li className="option-avec-déroulant">
                 <div
-                  className="flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer"
+                  className={`flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer ${
+                    activeItem === "commandes" ? "bg-gray-700 text-white" : ""
+                  }`}
                   onClick={() => setActiveItem("commandes")}
                 >
                   <div className="flex items-center">
@@ -83,7 +89,11 @@ export default function Dashboard() {
               {/* utilisateurs */}
               <li className="option-avec-déroulant">
                 <div
-                  className="flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer"
+                  className={`flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer ${
+                    activeItem === "utilisateurs"
+                      ? "bg-gray-700 text-white"
+                      : ""
+                  }`}
                   onClick={() => setActiveItem("utilisateurs")}
                 >
                   <div className="flex items-center">
@@ -96,7 +106,11 @@ export default function Dashboard() {
               {/* Statistiques */}
               <li className="option-avec-déroulant">
                 <div
-                  className="flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer"
+                  className={`flex items-center justify-between p-2 hover:bg-gray-700 cursor-pointer ${
+                    activeItem === "statistiques"
+                      ? "bg-gray-700 text-white"
+                      : ""
+                  }`}
                   onClick={() => setActiveItem("statistiques")}
                 >
                   <div className="flex items-center">
