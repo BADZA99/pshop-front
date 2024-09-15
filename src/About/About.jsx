@@ -1,5 +1,6 @@
 import React from 'react'
 import PageHeader from '../components/PageHeader';
+import NavItems from '@/components/NavItems';
 
 const subTitle = "About Our Brand";
 const title = "Good Qualification Services And Better Expriences";
@@ -31,6 +32,8 @@ const aboutList = [
 ];
 export default function About() {
   return (
+    <>
+      <NavItems />
     <div>
       <PageHeader title={"about our brand"} curPage={"About"} />
 
@@ -86,5 +89,6 @@ export default function About() {
         </div>
       </div>
     </div>
+    </>
   );
 }

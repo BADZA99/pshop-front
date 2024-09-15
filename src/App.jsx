@@ -50,7 +50,7 @@ console.log(user)
      <ToastContainer
         position="bottom-right"
         autoClose={3000}
-        pauseOnHover
+        pauseOnHover={true}
          />
     </>
   );

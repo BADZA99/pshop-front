@@ -346,12 +346,14 @@ const logout = async () => {
                   <li>
                     <Link to="/about">About</Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/services">Services</Link>
-                  </li>
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
+                  </li> */}
+                  {user !== null && user?.role_id === 1 && (
+                    <li>
+                      <Link to="/dasboard">Dashboard</Link>
+                    </li>
+                  )}
                   <li>
                     <Link to="/contact">Contact</Link>
                   </li>
@@ -378,26 +380,25 @@ const logout = async () => {
                   >
                     {user?.nom}
                   </Link> */}
-                    <Menubar
-                className="lab-btn me-3 d-none d-md-block">
-                <MenubarMenu>
-                  <MenubarTrigger>{user?.nom || "Menu"}</MenubarTrigger>
-                  <MenubarContent>
-                    <MenubarItem>
-                         mon profile
-                    </MenubarItem>
-                    <MenubarItem>Mes commandes</MenubarItem>
-                    <MenubarSeparator />
-                    <MenubarItem>panier</MenubarItem>
-                  </MenubarContent>
-                </MenubarMenu>
-              </Menubar>
-                  <span onClick={logout} className="d-none d-md-block cursor-pointer">
+                  <Menubar className="lab-btn me-3 d-none d-md-block">
+                    <MenubarMenu>
+                      <MenubarTrigger>{user?.nom || "Menu"}</MenubarTrigger>
+                      <MenubarContent>
+                        <MenubarItem>mon profile</MenubarItem>
+                        <MenubarItem>Mes commandes</MenubarItem>
+                        <MenubarSeparator />
+                        <MenubarItem>panier</MenubarItem>
+                      </MenubarContent>
+                    </MenubarMenu>
+                  </Menubar>
+                  <span
+                    onClick={logout}
+                    className="d-none d-md-block cursor-pointer px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
+                  >
                     Logout
                   </span>
                 </>
               )}
-            
 
               {/* menu toggler */}
               <div
