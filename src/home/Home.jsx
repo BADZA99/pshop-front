@@ -1,3 +1,4 @@
+import NavItems from "@/components/NavItems"
 import AppSection from "../AppSection"
 import AboutUs from "./AboutUs"
 import Banner from "./Banner"
@@ -9,16 +10,19 @@ import Sponsor from "./Sponsor"
 
 const Home = () => {
   return (
-    <div>
-      <Banner />
-      <HomeCategory />
-      <CategoryShowCase />
-      <Register />
-      <LocationSprade />
-      <AboutUs />
-      <AppSection />
-      <Sponsor/>
-    </div>
+    <>
+      <NavItems />
+      <div>
+        <Banner />
+        <HomeCategory />
+        <CategoryShowCase />
+        <Register />
+        <LocationSprade />
+        <AboutUs />
+        <AppSection />
+        <Sponsor />
+      </div>
+    </>
   );
 }
 

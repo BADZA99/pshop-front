@@ -1,5 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useUserStore } from '@/store/userStore';
+import NavItems from './NavItems';
 const title='login'
 const socialTitle='login with social media'
 const btnText='login now'
@@ -33,18 +40,81 @@ const socialList = [
 ];
 
 export default function Login() {
+   const { setUser,user } = useUserStore();
+   const navigate = useNavigate();
+   const {
+     register,
+     handleSubmit,
+     formState: { errors },
+   } = useForm();
+
+   const onSubmit = async (data) => {
+    console.log("dubmitted data",data)
+     try {
+       const response = await axios.post("login", {
+         email: data?.email,
+         password: data?.password,
+       });
+       if (response?.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        // setUser(response.data);
+         console.log(response.data);
+         toast.success(`${response.data.message}`);
+         setTimeout(() => {
+         if (response.data.role_id === 1) {
+           navigate("/dasboard");
+         } else {
+           navigate("/");
+         }
+         }, 3000);
+       }
+     } catch (error) {
+       console.log(error);
+       toast.error(`${error.response.data.message}`);
+     }
+   };
+
+  //  const fetchConnectedUser = async () => {
+  //    try {
+  //      const response = await axios.get("user",{
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //      });
+  //      console.log("logged user",response.data);
+  //      if (response?.status === 200) {
+  //        setUser(response.data);
+  //      }
+  //    } catch (error) {
+  //      console.error(error);
+  //    }
+  //  };
+
+  //  useEffect(() => {
+    
+  //     fetchConnectedUser();
+  //  }, [user])
+   
   return (
+    <>
+    <NavItems />
     <div className='login-section padding-tb section-bg'>
       <div className="container">
         <div className="account-wrapper">
             <h5 className='title'>{title}</h5>
-            <form className="account-form">
+            <form className="account-form"
+              onSubmit={handleSubmit(onSubmit)}
+            >
                 <div className="form-group">
-                    <input type="email" className="form-control" placeholder="Email"/>                  
+                    <input type="email" className="form-control" placeholder="Email"
+                    {...register("email", { required: true })}
+                    />                  
                 </div>
                 {/* password */}
                 <div className="form-group">
-                    <input type="password" className="form-control" placeholder="Password"/>
+                    <input type="password" className="form-control" placeholder="Password"
+                    {...register("password", { required: true })}
+                    />
                 </div>
                 <div className="form-group">
                     <div className='d-flex justify-content-between flex-wrap pt-sm-2'>
@@ -100,5 +170,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    </>
   )
 }

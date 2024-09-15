@@ -26,6 +26,15 @@ import About from './About/About.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import Axios from "axios";
+
+Axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+// pass cookie from the backend
+Axios.defaults.withCredentials = true;
+
+
+
+
 
 const router = createBrowserRouter([
   {
