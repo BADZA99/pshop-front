@@ -1,7 +1,7 @@
+import { fetcher } from "@/utilis/fetcher";
 import React, { useState } from "react";
-
-export default function UserCrud() {
-  // Exemple de données
+import useSWR from "swr";
+ // Exemple de données
   const data = [
     {
       nom: "John Doe",
@@ -35,25 +35,42 @@ export default function UserCrud() {
     },
     // Ajoutez d'autres utilisateurs si nécessaire
   ];
+export default function UserCrud() {
+  const { data, error, isLoading } = useSWR(
+    "http://localhost:8000/api/getUsers",
+    fetcher
+  );
+  console.log(data);
 
   // États pour gérer la recherche, la pagination et les données filtrées
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(5);
 
+  /*
+    {
+        id: 1,
+        nom: 'John Doe',
+        email: 'john.doe@example.com',
+        email_verified_at: null,
+        statut: 'active',
+        role_id: 2,
+        created_at: '2024-09-05T12:26:26.000000Z',
+        updated_at: '2024-09-05T12:26:26.000000Z'
+      }, */
   // Filtrer les données en fonction du terme de recherche
-  const filteredData = data.filter(
+  const filteredData = data?.users?.filter(
     (row) =>
       row.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
       row.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       row.statut.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.role.toLowerCase().includes(searchTerm.toLowerCase())
+      row.telephone.toString().includes(searchTerm)
   );
 
   // Calculer l'index des lignes à afficher pour la page courante
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = filteredData?.slice(indexOfFirstRow, indexOfLastRow);
 
   // Changer la page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -90,16 +107,21 @@ export default function UserCrud() {
             <th className="px-4 py-2">Email</th>
             <th className="px-4 py-2">Statut</th>
             <th className="px-4 py-2">Role</th>
+            <th className="px-4 py-2">Telephone</th>
             <th className="px-4 py-2">Action</th>
           </tr>
         </thead>
         <tbody>
-          {currentRows.map((item, index) => (
+          {currentRows?.map((item, index) => (
             <tr key={index}>
               <td className="border px-4 py-2">{item.nom}</td>
               <td className="border px-4 py-2">{item.email}</td>
               <td className="border px-4 py-2">{item.statut}</td>
-              <td className="border px-4 py-2">{item.role}</td>
+              <td className="border px-4 py-2">{item.role_id ===2 ? 'client' 
+              
+             
+            : 'admin'}</td>
+              <td className="border px-4 py-2">{item.telephone}</td>
               <td className="border px-4 py-2">
                 <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">
                   Editer
@@ -117,7 +139,7 @@ export default function UserCrud() {
       <div className="mt-4">
         <ul className="inline-flex items-center -space-x-px">
           {Array.from(
-            { length: Math.ceil(filteredData.length / rowsPerPage) },
+            { length: Math.ceil(filteredData?.length / rowsPerPage) },
             (_, i) => (
               <li
                 key={i}

@@ -1,6 +1,7 @@
+import { fetcher } from '@/utilis/fetcher';
 import React, { useEffect, useState } from 'react'
+import useSWR from 'swr';
 
-export default function ProduitCrud() {
   // Exemple de données
 const data = [
   {
@@ -40,26 +41,51 @@ const data = [
   },
 
 ];
+export default function ProduitCrud() {
+  const {
+    data,
+    error,
+    isLoading,
+  } = useSWR("http://localhost:8000/api/getProduits", fetcher);
+
+  console.log(data);
 
   // États pour gérer la recherche, la pagination et les données filtrées
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(5);
 
+  /*
+   {
+        idProduit: 4,
+        LibelleProduit: 'sac a dos',
+        CodeProduit: 'PROD2836',
+        description: 'Description du produit exemple',
+        prixVente: 150,
+        image: 'image_url',
+        Seuil: 10,
+        Stock: 50,
+        PrixAchat: 10000,
+        idCat: 2,
+        created_at: '2024-09-06T10:17:41.000000Z',
+        updated_at: '2024-09-06T10:17:41.000000Z'
+      } */
   // Filtrer les données en fonction du terme de recherche
-  const filteredData = data.filter(
+  const filteredData = data?.produits?.filter(
     (row) =>
-      row.libelle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.codeProduit.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.LibelleProduit.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.CodeProduit.toLowerCase().includes(searchTerm.toLowerCase()) ||
       row.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.seuil.toString().includes(searchTerm) ||
-      row.stock.toString().includes(searchTerm)
+      row.Seuil.toString().includes(searchTerm) ||
+      row.Stock.toString().includes(searchTerm) ||
+      row.prixVente.toString().includes(searchTerm) ||
+      row.PrixAchat.toString().includes(searchTerm)
   );
 
   // Calculer l'index des lignes à afficher pour la page courante
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = filteredData?.slice(indexOfFirstRow, indexOfLastRow);
 
   // Changer la page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -67,7 +93,7 @@ const data = [
   // Gérer la recherche
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    setCurrentPage(1); // la première page lors d'une nouvelle recherche
+    setCurrentPage(1);
   };
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -100,31 +126,28 @@ const data = [
           </tr>
         </thead>
         <tbody>
-          {currentRows.map((item, index) => (
+          {currentRows?.map((item, index) => (
             <tr key={index}>
-              <td className="border px-4 py-2">{item.libelle}</td>
-              <td className="border px-4 py-2">{item.codeProduit}</td>
+              <td className="border px-4 py-2">{item.LibelleProduit}</td>
+              <td className="border px-4 py-2">{item.CodeProduit}</td>
               <td className="border px-4 py-2">{item.description}</td>
-              <td className="border px-4 py-2">{item.seuil}</td>
+              <td className="border px-4 py-2">{item.Seuil}</td>
+
               <td
                 className={`border px-4 py-2 ${
-                  item.stock <= item.seuil
+                  item.Stock <= item.Seuil
                     ? "bg-red-500 text-white"
                     : "bg-green-500 text-white"
                 }`}
               >
-                {item.stock}
+                {item.Stock}
               </td>
               {/* action */}
               <td className="border px-4 py-2">
-                <button
-                  className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
-                >
+                <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">
                   Éditer
                 </button>
-                <button
-                  className="bg-red-500 text-white px-2 py-1 rounded"
-                >
+                <button className="bg-red-500 text-white px-2 py-1 rounded">
                   Supprimer
                 </button>
               </td>
@@ -137,7 +160,7 @@ const data = [
       <div className="mt-4">
         <ul className="inline-flex items-center -space-x-px">
           {Array.from(
-            { length: Math.ceil(filteredData.length / rowsPerPage) },
+            { length: Math.ceil(filteredData?.length / rowsPerPage) },
             (_, i) => (
               <li
                 key={i}

@@ -1,6 +1,6 @@
+import { fetcher } from "@/utilis/fetcher";
 import React, { useState } from "react";
-
-export default function CategorieCrud() {
+import useSWR from "swr";
   // Exemple de données
 const data = [
   { nomCat: "Électronique" },
@@ -14,21 +14,34 @@ const data = [
   { nomCat: "Bricolage" },
   // Ajoutez d'autres catégories si nécessaire
 ];
+export default function CategorieCrud() {
+  const { data, error, isLoading } = useSWR(
+    "http://localhost:8000/api/getCategories",
+    fetcher
+  );
+  console.log(data);
 
   // États pour gérer la recherche, la pagination et les données filtrées
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(5);
 
+  /*
+     {
+        idCat: 2,
+        NomCat: 'eletro-menager',
+        created_at: '2024-09-05T16:02:55.000000Z',
+        updated_at: '2024-09-05T16:03:53.000000Z'
+      }, */
   // Filtrer les données en fonction du terme de recherche
-  const filteredData = data.filter((row) =>
-    row.nomCat.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = data?.categories?.filter((row) =>
+    row.NomCat.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Calculer l'index des lignes à afficher pour la page courante
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = filteredData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = filteredData?.slice(indexOfFirstRow, indexOfLastRow);
 
   // Changer la page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -78,9 +91,9 @@ const data = [
           </tr>
         </thead>
         <tbody>
-          {currentRows.map((item, index) => (
+          {currentRows?.map((item, index) => (
             <tr key={index}>
-              <td className="border px-4 py-2">{item.nomCat}</td>
+              <td className="border px-4 py-2">{item.NomCat}</td>
               <td className="border px-4 py-2">
                 <button
                   onClick={() => handleEdit(index)}
@@ -104,7 +117,7 @@ const data = [
       <div className="mt-4">
         <ul className="inline-flex items-center -space-x-px">
           {Array.from(
-            { length: Math.ceil(filteredData.length / rowsPerPage) },
+            { length: Math.ceil(filteredData?.length / rowsPerPage) },
             (_, i) => (
               <li
                 key={i}

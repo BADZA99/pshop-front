@@ -64,7 +64,7 @@ const fetchConnectedUser = async () => {
           </div>
         </nav>
 
-        {/* Conteneur principal pour l'aside et le main */}
+        {/* Conteneur principal pour  et le main */}
         <div className="flex">
           {/* Navigation latérale */}
           <aside className="bg-gray-800 text-white w-64 min-h-screen p-4">
