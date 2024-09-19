@@ -385,9 +385,13 @@ const logout = async () => {
                       <MenubarTrigger>{user?.nom || "Menu"}</MenubarTrigger>
                       <MenubarContent>
                         <MenubarItem>mon profile</MenubarItem>
-                        <MenubarItem>Mes commandes</MenubarItem>
+                        <MenubarItem>
+                          <Link to="/usercommandes">Mes commandes</Link>
+                        </MenubarItem>
                         <MenubarSeparator />
-                        <MenubarItem>panier</MenubarItem>
+                        <MenubarItem>
+                          <Link to="/cart-page">panier</Link>
+                        </MenubarItem>
                       </MenubarContent>
                     </MenubarMenu>
                   </Menubar>

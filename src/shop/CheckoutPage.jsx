@@ -1,32 +1,90 @@
-
-
+/* eslint-disable react/prop-types */
 import { Modal } from "react-bootstrap";
-import React, { useState } from 'react'
-import { Button } from 'react-bootstrap';
-import '../components/modal.css'
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import "../components/modal.css";
 import { useLocation, useNavigate } from "react-router";
-export default function CheckoutPage() {
-    const [show, setshow] = useState(false);
-    const [activeTab, setactiveTab] = useState('visa')
+import { useUserStore } from "@/store/userStore";
+import { toast } from "react-toastify";
+export default function CheckoutPage({
+  cartItems,
+  cartSubtotal,
+  orderTotal,
+  selectedCity,
+  selectedArrondissement,
+}) {
+  const [show, setshow] = useState(false);
+  const [activeTab, setactiveTab] = useState("visa");
+  const { setUser, user } = useUserStore();
 
-    // handle tab change
-    const handleTabChange = (tab) => {
-        setactiveTab(tab);
+  // handle tab change
+  const handleTabChange = (tab) => {
+    setactiveTab(tab);
+  };
+  const handleShow = () => setshow(true);
+  const handleClose = () => setshow(false);
+
+  // redirect to homepage
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
+  const handleOrderCobfirm = () => {
+    // Créer l'objet commande
+    const request = {
+       // Remplacez par l'ID client ré
+      idClient: user?.id, // Remplacez par l'ID client réel
+      dateCommande: new Date().toISOString().split("T")[0],
+      montantCommande: orderTotal, // Remplacez par le montant réel
+      MethodePaiement: activeTab, // Remplacez par la méthode de paiement réelle
+      DateLivraison: new Date(new Date().setDate(new Date().getDate() + 5))
+        .toISOString()
+        .split("T")[0],
+      Adresse: `ville: ${selectedCity}, arrondissement: ${selectedArrondissement}`,
+      Telephone: user?.telephone, // Remplacez par le téléphone réel
+      isPaid: true,
+      deliverTo: user?.nom, // Remplacez par le nom réel
+    };
+
+    const commande = {
+      // CODECOMMANDE
+      commandeId: `${Math.floor(
+        Math.random() * 1000
+      )}`, 
+      idClient: request.idClient,
+      dateCommande: request.dateCommande,
+      montantCommande: request.montantCommande,
+      MethodePaiement: request.MethodePaiement,
+      DateLivraison: request.DateLivraison,
+      Adresse: request.Adresse,
+      Telephone: request.Telephone,
+      isPaid: request.isPaid,
+      deliverTo: request.deliverTo,
+      numCommande: "CMD" + Date.now(), // Générer numCommande
+      etat: "en cours",
+    };
+
+    // Récupérer les commandes existantes du localStorage
+    const existingCommandes =
+      JSON.parse(localStorage.getItem("commandes")) || {};
+
+    // Ajouter la nouvelle commande pour l'utilisateur
+    if (!existingCommandes[commande.idClient]) {
+      existingCommandes[commande.idClient] = [];
     }
-    const handleShow = () => setshow(true);
-    const handleClose = () => setshow(false);
+    existingCommandes[commande.idClient].push(commande);
 
-    // redirect to homepage
-    const location=useLocation();
-    const navigate=useNavigate();
-    const from=location.state?.from?.pathname || '/';
+    // Stocker les commandes mises à jour dans le localStorage
+    localStorage.setItem("commandes", JSON.stringify(existingCommandes));
 
-    const handleOrderCobfirm = ()=>{
-        alert('order confirmed');
-        localStorage.removeItem('cart');
-        handleClose();
-        navigate(from,{replace:true});
-    }
+    toast.success("order confirmed");
+    localStorage.removeItem("cart");
+
+    // toast.error("order not confirmed");
+    handleClose();
+    navigate(from, { replace: true });
+  };
+
 
   return (
     <div className="modalCard">
@@ -142,8 +200,9 @@ export default function CheckoutPage() {
                             </div>
                           </div>
                           <div className="px-5 pay">
-                            <button className="btn btn-success btn-block"
-                            onClick={handleOrderCobfirm}
+                            <button
+                              className="btn btn-success btn-block"
+                              onClick={handleOrderCobfirm}
                             >
                               order
                             </button>
@@ -193,7 +252,6 @@ export default function CheckoutPage() {
                               <span>extra info</span>
                               <i className="fa fa-eye"></i>
                             </div>
-                           
                           </div>
                           <div className="px-5 pay">
                             <button className="btn btn-success btn-block">
@@ -206,7 +264,8 @@ export default function CheckoutPage() {
                   </div>
                   {/* payment derscription */}
                   <p className="mt-3 px-4 ">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus itaque odit ipsum laudantium eius
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Repellendus itaque odit ipsum laudantium eius
                   </p>
                 </div>
               </div>

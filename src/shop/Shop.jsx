@@ -9,6 +9,7 @@ import Search from './Search'
 import ShopCategory from './ShopCategory'
 import PopularPost from './PopularPost'
 import Tags from './Tags'
+import NavItems from '@/components/NavItems'
 export default function Shop() {
     const [gridList, setGridList] = useState(true);
     const [products, setproducts] = useState(Data);
@@ -33,62 +34,71 @@ const updatedItems = Data.filter((curElem) => {
   setselectedCategory(Currentcategory);
 }
   return (
-    <div>
-      <PageHeader title="our shop page" curPage="Shop" />
-      {/* shop page */}
-      <div className="shop-page padding-tb">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-8 col-12">
-              <article>
-                {/* layout and title */}
-                <div className="shop-title d-flex flex-wrap justify-content-between">
-                  <p>{showResults}</p>
-                  <div
-                    className={`product-view-mode ${
-                      gridList ? "gridActive" : "listActive"
-                    }`}
-                  >
-                    <a className="grid" onClick={() => setGridList(!gridList)}>
-                      <i className="icofont-ghost"></i>
-                    </a>
-                    <a className="list" onClick={() => setGridList(!gridList)}>
-                      <i className="icofont-listine-dots"></i>
-                    </a>
+    <>
+      <NavItems />
+      <div>
+        <PageHeader title="our shop page" curPage="Shop" />
+        {/* shop page */}
+        <div className="shop-page padding-tb">
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="col-lg-8 col-12">
+                <article>
+                  {/* layout and title */}
+                  <div className="shop-title d-flex flex-wrap justify-content-between">
+                    <p>{showResults}</p>
+                    <div
+                      className={`product-view-mode ${
+                        gridList ? "gridActive" : "listActive"
+                      }`}
+                    >
+                      <a
+                        className="grid"
+                        onClick={() => setGridList(!gridList)}
+                      >
+                        <i className="icofont-ghost"></i>
+                      </a>
+                      <a
+                        className="list"
+                        onClick={() => setGridList(!gridList)}
+                      >
+                        <i className="icofont-listine-dots"></i>
+                      </a>
+                    </div>
                   </div>
-                </div>
-                {/* product cards */}
-                <div className="">
-                  <ProductCards
-                    gridList={gridList}
-                    products={currentProducts}
+                  {/* product cards */}
+                  <div className="">
+                    <ProductCards
+                      gridList={gridList}
+                      products={currentProducts}
+                    />
+                  </div>
+                  <Pagination
+                    productsPerpage={productsPerPage}
+                    totalProducts={products.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
                   />
-                </div>
-                <Pagination
-                  productsPerpage={productsPerPage}
-                  totalProducts={products.length}
-                  paginate={paginate}
-                  currentPage={currentPage}
+                </article>
+              </div>
+              <div className="col-lg-4 col-12">
+                <aside>
+                  <Search gridList={gridList} products={products} />
+                </aside>
+                <ShopCategory
+                  filterItem={filterItem}
+                  menuItems={menuItems}
+                  selectedcategory={selectedcategory}
+                  setproducts={setproducts}
+                  setItem={setproducts}
                 />
-              </article>
-            </div>
-            <div className="col-lg-4 col-12">
-              <aside>
-                <Search gridList={gridList} products={products} />
-              </aside>
-              <ShopCategory
-                filterItem={filterItem}
-                menuItems={menuItems}
-                selectedcategory={selectedcategory}
-                setproducts={setproducts}
-                setItem={setproducts}
-              />
-              <PopularPost />
-              <Tags/>
+                <PopularPost />
+                <Tags />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
