@@ -368,6 +368,8 @@ export default function ProduitCrud() {
             <th className="px-4 py-2">Description</th>
             <th className="px-4 py-2">Seuil</th>
             <th className="px-4 py-2">Stock</th>
+            <th className="px-4 py-2">dateExp</th>
+            <th className="px-4 py-2">Expire</th>
             <th className="px-4 py-2">Action</th>
           </tr>
         </thead>
@@ -395,6 +397,23 @@ export default function ProduitCrud() {
               >
                 {item.Stock}
               </td>
+              <td className="border px-4 py-2">{item.dateExp}</td>
+              <td
+                className={`border px-4 py-2 ${
+                  item.dateExp === null
+                    ? ""
+                    : new Date(item.dateExp) < new Date()
+                    ? "bg-red-500 text-white"
+                    : "bg-green-500 text-white"
+                }`}
+              >
+                {item.dateExp === null
+                  ? ""
+                  : new Date(item.dateExp) < new Date()
+                  ? "Oui"
+                  : "Non"}{" "}
+              </td>
+
               {/* action modifier */}
               <td className="border px-4 py-2">
                 <Dialog>
@@ -556,8 +575,9 @@ export default function ProduitCrud() {
                   </DialogContent>
                 </Dialog>
 
-                <button className="bg-red-500 text-white px-2 py-1 rounded"
-                  onClick={() => deleteProduit(item.idProduit)} 
+                <button
+                  className="bg-red-500 text-white px-2 py-1 rounded"
+                  onClick={() => deleteProduit(item.idProduit)}
                 >
                   Supprimer
                 </button>

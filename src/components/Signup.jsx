@@ -29,6 +29,7 @@ export default function Signup() {
         nom: data?.name,
         email: data?.email,
         password: data?.password,
+        telephone: data?.telephone,
         role_id:2,
       });
       if (response?.status === 201) {
@@ -60,9 +61,20 @@ export default function Signup() {
                   {...register("name", { required: true })}
                 />
               </div>
-              {
-                errors.name && <span className="text-danger">This field is required</span>
-              }
+              {errors.name && (
+                <span className="text-danger">This field is required</span>
+              )}
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="telephone"
+                  {...register("telephone", { required: true })}
+                />
+              </div>
+              {errors.telephone && (
+                <span className="text-danger">This field is required</span>
+              )}
               <div className="form-group">
                 <input
                   type="email"
@@ -71,9 +83,9 @@ export default function Signup() {
                   {...register("email", { required: true })}
                 />
               </div>
-              {
-                errors.email && <span className="text-danger">This field is required</span>
-              }
+              {errors.email && (
+                <span className="text-danger">This field is required</span>
+              )}
               {/* password */}
               <div className="form-group">
                 <input
@@ -83,9 +95,9 @@ export default function Signup() {
                   {...register("password", { required: true })}
                 />
               </div>
-              {
-                errors.password && <span className="text-danger">This field is required</span>
-              }
+              {errors.password && (
+                <span className="text-danger">This field is required</span>
+              )}
               <div className="form-group">
                 <input
                   type="password"
@@ -94,9 +106,9 @@ export default function Signup() {
                   {...register("password2", { required: true })}
                 />
               </div>
-              {
-                errors.password2 && <span className="text-danger">This field is required</span>
-              }
+              {errors.password2 && (
+                <span className="text-danger">This field is required</span>
+              )}
               <div className="form-group">
                 <button type="submit" className="lab-btn lab-btn">
                   <span>{btnText}</span>

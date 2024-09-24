@@ -80,30 +80,38 @@ export default function UserCommandes() {
                   <p className="text-base font-medium text-body-color">
                     {commande.montantCommande} €
                   </p>
-                
+                  <p className="text-base font-medium text-body-color">
+                    details
+                    {commande.cartItems?.map((item) => (
+                      <li key={item.id}>
+                        <p>Nom: {item.name}</p>
+                        <p>Prix: {item.price} €</p>
+                        <p>Couleur: {item.color}</p>
+                        <p>Quantité: {item.quantity}</p>
+                      </li>
+                    ))}{" "}
+                  </p>
                 </div>
                 {/* ajoute un bouton annuler */}
                 <button
                   onClick={() => deleteCommande(commande.commandeId)}
                   className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
                 >
-                  Delete
+                  Annuler
                 </button>
               </div>
             </div>
           ))}
           {/* si vide pas de commandes */}
-          {
-            Usercommandes.length === 0 && (
-              <div className=" text-center w-full px-4 md:w-1/2 lg:w-1/3 mt-5">
-                <div className="mb-9 rounded-xl py-8 px-7 shadow-md transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
-                  <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
-                    Vous avez pas encore de commandes
-                  </h3>
-                </div>
+          {Usercommandes.length === 0 && (
+            <div className=" text-center w-full px-4 md:w-1/2 lg:w-1/3 mt-5">
+              <div className="mb-9 rounded-xl py-8 px-7 shadow-md transition-all hover:shadow-lg sm:p-9 lg:px-6 xl:px-9">
+                <h3 className="text-xl font-bold text-black sm:text-2xl lg:text-xl xl:text-2xl">
+                  Vous avez pas encore de commandes
+                </h3>
               </div>
-            )
-          }
+            </div>
+          )}
         </div>
       </div>
     </>

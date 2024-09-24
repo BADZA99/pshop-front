@@ -2,9 +2,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Ratting from '../components/Ratting';
+import { useUserStore } from '@/store/userStore';
 
 export default function ProductCards({ gridList, products }) {
     // console.log(products);
+        const { user } = useUserStore();
   return (
     <div
       className={`shop-product-wrap row justify-content-center ${
@@ -28,9 +30,9 @@ export default function ProductCards({ gridList, products }) {
                 <a href="#">
                   <i className="icofont-heart"></i>
                 </a>
-                <Link to={`/cart-page`}>
+               {user !== null && <Link to={`/cart-page`}>
                   <i className="icofont-cart-alt"></i>
-                </Link>
+                </Link>}
               </div>
             </div>
 

@@ -40,21 +40,24 @@ export default function CheckoutPage({
       DateLivraison: new Date(new Date().setDate(new Date().getDate() + 5))
         .toISOString()
         .split("T")[0],
-      Adresse: `ville: ${selectedCity}, arrondissement: ${selectedArrondissement}`,
+      Adresse: `ville: ${selectedCity}, 
+      arrondissement: ${selectedArrondissement}`,
       Telephone: user?.telephone, // Remplacez par le téléphone réel
       isPaid: true,
+      // cartItems
+      cartItems:cartItems,
       deliverTo: user?.nom, // Remplacez par le nom réel
     };
 
     const commande = {
       // CODECOMMANDE
-      commandeId: `${Math.floor(
-        Math.random() * 1000
-      )}`, 
+      commandeId: `${Math.floor(Math.random() * 1000)}`,
       idClient: request.idClient,
       dateCommande: request.dateCommande,
       montantCommande: request.montantCommande,
       MethodePaiement: request.MethodePaiement,
+      // cartItems
+      cartItems: request.cartItems,
       DateLivraison: request.DateLivraison,
       Adresse: request.Adresse,
       Telephone: request.Telephone,

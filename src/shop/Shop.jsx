@@ -10,9 +10,11 @@ import ShopCategory from './ShopCategory'
 import PopularPost from './PopularPost'
 import Tags from './Tags'
 import NavItems from '@/components/NavItems'
+import { useUserStore } from '@/store/userStore'
 export default function Shop() {
     const [gridList, setGridList] = useState(true);
     const [products, setproducts] = useState(Data);
+
 
     // pagination
     const [currentPage, setCurrentPage] = useState(1);

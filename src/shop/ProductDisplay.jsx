@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
+import NavItems from '@/components/NavItems';
+import { useUserStore } from '@/store/userStore';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 const desc='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore, temporibus.'
 export default function ProductDisplay({item}) {
+          const { user } = useUserStore();
 //   console.log(item);
   const { name, id, price, seller, ratingsCount, quantity,img } = item;
   const [prequantity, setQuantity] = useState(quantity);
@@ -62,81 +65,87 @@ export default function ProductDisplay({item}) {
         setCoupon("");
     };
   return (
-    <div>
+    <>
       <div>
-        <h4>{name}</h4>
-        <p className="rating">
-          <i className="icofont-star"></i>
-          <i className="icofont-star"></i>
-          <i className="icofont-star"></i>
-          <i className="icofont-star"></i>
-          <i className="icofont-star"></i>
-          <span>{ratingsCount} review</span>
-        </p>
-        <h4>${price}</h4>
-        <p>By: {seller}</p>
-        <p>{desc}</p>
-      </div>
-      {/* cart component */}
-      <div className="">
-        <form action="" onSubmit={handleSubmit}>
-          <div className="select-product size">
-            {/* size */}
-            <select name="" id="" value={size} onChange={handleSizeChange}>
-              <option value="">select size</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-              <option value="XXL">XXL</option>
-            </select>
-          </div>
-          {/* color */}
-          <div className="select-product color">
-            <select name="" id="" value={color} onChange={handleColorChange}>
-              <option value="">select color</option>
-              <option value="red">Red</option>
-              <option value="blue">Blue</option>
-              <option value="green">Green</option>
-              <option value="yellow">Yellow</option>
-              <option value="black">Black</option>
-            </select>
-          </div>
-          {/* cart plius minus */}
-          <div className="cart-plus-minus">
-            <div className="dec qtybutton" onClick={handleDecrease}>
-              -
+      {/* <NavItems /> */}
+        <div>
+          <h4>{name}</h4>
+          <p className="rating">
+            <i className="icofont-star"></i>
+            <i className="icofont-star"></i>
+            <i className="icofont-star"></i>
+            <i className="icofont-star"></i>
+            <i className="icofont-star"></i>
+            <span>{ratingsCount} review</span>
+          </p>
+          <h4>${price}</h4>
+          <p>By: {seller}</p>
+          <p>{desc}</p>
+        </div>
+        {/* cart component */}
+        <div className="">
+          <form action="" onSubmit={handleSubmit}>
+            <div className="select-product size">
+              {/* size */}
+              <select name="" id="" value={size} onChange={handleSizeChange}>
+                <option value="">select size</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+              </select>
             </div>
-            <input
-              className="cart-plus-minus-box"
-              type="text"
-              value={prequantity}
-              name="qtybutton"
-              onChange={(e) => setQuantity(parseInt(e.target.value))}
-            />
-            <div className="inc qtybutton" onClick={handleIncrease}>
-              +
+            {/* color */}
+            <div className="select-product color">
+              <select name="" id="" value={color} onChange={handleColorChange}>
+                <option value="">select color</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="yellow">Yellow</option>
+                <option value="black">Black</option>
+              </select>
             </div>
-          </div>
-          {/* coupon field */}
-          <div className="discount-code mb-2">
-            <input
-              type="text"
-              placeholder="Coupon Code"
-              value={coupon}
-              onChange={(e) => setCoupon(e.target.value)}
-            />
-          </div>
-          {/* btn section */}
-          <button type="submit" className="lab-btn">
-            <span>Add to Cart</span>
-          </button>
+            {/* cart plius minus */}
+            <div className="cart-plus-minus">
+              <div className="dec qtybutton" onClick={handleDecrease}>
+                -
+              </div>
+              <input
+                className="cart-plus-minus-box"
+                type="text"
+                value={prequantity}
+                name="qtybutton"
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
+              />
+              <div className="inc qtybutton" onClick={handleIncrease}>
+                +
+              </div>
+            </div>
+            {/* coupon field */}
+            <div className="discount-code mb-2">
+              <input
+                type="text"
+                placeholder="Coupon Code"
+                value={coupon}
+                onChange={(e) => setCoupon(e.target.value)}
+              />
+            </div>
+            {/* btn section */}
+            <button type="submit" className="lab-btn">
+              <span>Add to Cart</span>
+            </button>
 
-          <Link to={"/cart-page"} className='lab-btn bg-primary'>
-            <span>Checkout</span>
-          </Link>
-        </form>
+            <Link
+              to={user ? "/cart-page" : "/login"}
+              className="lab-btn bg-primary"
+            >
+              <span>Checkout</span>
+            </Link>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

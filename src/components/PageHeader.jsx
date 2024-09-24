@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { Link } from 'react-router-dom'
+import NavItems from './NavItems'
 
 export default function PageHeader({
     title,
     curPage
 }) {
   return (
+    <>
+     <NavItems />
     <div className='pageheader-section'>
       <div className="container">
         <div className="row">
@@ -24,5 +27,6 @@ export default function PageHeader({
         </div>
       </div>
     </div>
+    </>
   )
 }
